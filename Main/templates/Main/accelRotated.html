@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+ <html lang='cs'>
+  <head>
+    <title></title>
+    {% load staticfiles %}
+    <meta charset='utf-8'>
+    <meta name='description' content=''>
+    <meta name='keywords' content=''>
+    <meta name='author' content=''>
+    <meta name='robots' content='all'>
+    <!-- <meta http-equiv='X-UA-Compatible' content='IE=edge'> -->
+    <link rel="stylesheet" type="text/css" href="{% static "Main/css/inputs.css" %}" />
+  </head>
+  <body onload="setTimeout('init(0,25,1);', 100);" class="">
+ 
+
+  <div class="rotated" style="width: 640px; height: 1024px; margin: 0 auto; float: none;">
+      <iframe src="http://192.168.42.1:81/html/min.php" width=800px height=800px/></iframe>
+  </div>
+    
+  <div style="width: 100%;>
+	 <div class="inputs">
+    		<form id="percent" class="" action="{% url "GetPower" %}" method="post">
+       			<input id="pow" type="range" min="-120" max="120" value="1" style="width: 100%;"/>
+       			<input name="temp" type="hidden" />
+    		</form>
+
+		<form id="percent" action="{% url "GetNumber" %}" method="post">
+       			<input id="val" type="hidden" min="60" max="90" value="75"/>
+       			<input name="temp" type="hidden" />
+		</form>
+
+    	  </div>
+    
+  </div>
+  
+  <br>
+  
+
+  <input id="Debug" type="hidden" value="0">
+  
+  <script src="{% static 'Main/js/jquery.js' %}"></script>
+  
+
+<style>
+
+.rotated { 
+    transform:rotate(90deg); 
+    -webkit-transform:rotate(90deg); 
+    -moz-transform:rotate(90deg); 
+    -o-transform:rotate(90deg); 
+}
+
+.notRotated {
+    transform:rotate(0deg);
+    -webkit-transform:rotate(0deg);
+    -moz-transform:rotate(0deg);
+    -o-transform:rotate(0deg);
+}
+
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+}
+
+</style>
+
+	 <script src="{% static "Main/js/getAccelData.js" %}"></script>
+  
+	 <script src="{% static "Main/js/turn.js" %}"></script>
+
+  <script>
+  var power = 0;
+  theInput = document.getElementById('pow')
+  setInterval(function() {
+
+    if(theInput.value > 0){
+        power = parseInt(theInput.value) + 55;}
+    else {if(theInput.value < 0){
+        power = theInput.value - 55;}
+	}
+
+    $.ajax({
+        url : theInput.form.action,
+        type: theInput.form.method,
+        data: {pow: power}
+    });
+  }, 250);
+
+  </script>
+
+
+
+  </body>
+
+</html>
+

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang='cs'>
+  <head>
+    <title></title>
+    {% load staticfiles %}
+    <meta charset='utf-8'>
+    <meta name='description' content=''>
+    <meta name='keywords' content=''>
+    <meta name='author' content=''>
+    <meta name='robots' content='all'>
+    <!-- <meta http-equiv='X-UA-Compatible' content='IE=edge'> -->
+  </head>
+  <body>
+  
+
+  
+  <div style="width: 100%;>
+    <div class="inputs">
+    <form id="go" action="{% url "StopGo" %}" method="post">
+       <input id="StopGo" type="button" value="go" style="width: 100%; height: 150px"/>
+       <input name="temp" type="hidden" />  
+    </form>
+    </div>
+    
+    <br>
+    
+    <div class="inputs">
+    <form id="percent" action="{% url "GetNumber" %}" method="post">
+       <input id="val" type="range" min="60" max="90" value="75" style="width: 100%;"/>
+       <input name="temp" type="hidden" />  
+    </form>
+    </div>
+    
+    <br>
+  
+    <div class="inputs">
+    <form id="stop" action="{% url "StopGo" %}" method="post">
+       <input id="StopGo2" type="button" value="stop" style="width: 100%; height: 150px"/>
+       <input name="temp" type="hidden" />  
+    </form>
+    </div>
+    
+  </div>
+  
+  <br>
+  
+  <div style="width: 640px; height: 1024px; margin: 0 auto; float: none;">
+    <iframe src="http://192.168.42.1:8081/" height="480" width="640"/></iframe>
+  </div>
+  <script src="{% static 'Main/js/jquery.js' %}"></script>
+  <script>
+  $('#val').on("change", function() {
+    $.ajax({
+        url : this.form.action,
+        type: this.form.method,
+        data: {val: (this.value) / 10.0 }
+    });
+  });
+  </script>
+
+  <script>
+  $('#StopGo').on("click", function() {
+    $.ajax({
+        url : this.form.action,
+        type: this.form.method,
+        data: {StopGo: this.value}
+    });
+  });
+  </script>
+
+  <script>
+  $('#StopGo2').on("click", function() {
+    $.ajax({
+        url : this.form.action,
+        type: this.form.method,
+        data: {StopGo: this.value}
+    });
+  });
+  </script>
+  </body>
+  
+  <style>
+  body {
+    padding: 30px;
+}
+input[type=range] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;
+    
+    /*fix for FF unable to apply focus style bug */
+    border: 1px solid white;
+    
+    /*required for proper track sizing in FF*/
+    width: 300px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 250px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+    background: goldenrod;
+    margin-top: -4px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+input[type=range]::-moz-range-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: goldenrod;
+}
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 300px;
+    height: 5px;
+    
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+    
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #777;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: goldenrod;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #888;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
+}
+
+input[type='button'] { font-size: 50px; font-family: monospace; }
+
+</style>
+</html>
